@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  app01:
+    build:
+      context: ./app01
+      dockerfile: Dockerfile_app01
+    container_name: app01
+    platform: linux/x86_64
+    tty: true
+    stdin_open: true
+    environment:
+      TZ: "Asia/Tokyo"
+      PHP_XDEBUG: "On"
+      PHP_XDEBUG_REMOTE_HOST: "host.docker.internal"
+      PHP_IDE_CONFIG: serverName=server-xdebug
+    volumes:
+      - ./app01/app:/var/www/app
+      - ./app01/contents:/var/www/contents
+    networks:
+      sftp-network:
+        aliases:
+          - app.sample.jp
+
+networks:
+  sftp-network:
+    name: sftp-network
+    external: true

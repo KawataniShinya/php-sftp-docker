@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  sftp01:
+    image: atmoz/sftp:debian
+    container_name: sftp01
+    environment:
+      TZ: "Asia/Tokyo"
+    volumes:
+        - ./sftp01/sftp_home:/home/ftpuser/sftp_home
+    ports:
+        - "22:22"
+    command: ftpuser:ftppass:::sftp_home
+    networks:
+      sftp-network:
+
+networks:
+  sftp-network:
+    driver: bridge
+    internal: false
+    name: sftp-network

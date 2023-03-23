@@ -1,0 +1,30 @@
+# syntax = docker/dockerfile:1.2
+
+FROM centos:centos7 AS php-base
+
+RUN yum update -y
+RUN yum install -y epel-release
+RUN yum install -y http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
+RUN yum install -y less procps which git zip unzip gcc
+RUN yum install -y --enablerepo=remi,remi-php72 php php-pear php-devel php-mbstring php-xml php-xmlrpc php-gd php-pdo php-pecl-mcrypt php-mysqlnd php-pecl-mysql php-pecl-zip libssh2 libssh2-devel
+RUN pecl channel-update pecl.php.net
+RUN pecl install xdebug-3.0.4
+RUN pecl install ssh2-1.2
+RUN localedef -f UTF-8 -i ja_JP ja_JP.UTF-8
+RUN ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+
+COPY ./env/php-xdebug.ini /etc/php.d/php-xdebug.ini
+COPY ./env/php.ini /etc/php.ini
+COPY ./env/ssh2.ini /etc/php.d/ssh2.ini
+
+ENV LANG ja_JP.UTF-8
+ENV LANGUAGE ja_JP:ja
+ENV LC_ALL ja_JP.UTF-8
+
+ENV APP_ROOT="/var/www/app"
+WORKDIR ${APP_ROOT}
+
+ENTRYPOINT ["bash","-c"]
+CMD ["/bin/bash"]
+
+EXPOSE 80

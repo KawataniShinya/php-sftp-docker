@@ -51,3 +51,4 @@ ls -l
 ### PhpStormでのXdebug設定
 - 名前をPHP_IDE_CONFIGと合わせる。
 - パスマッピングの指定は、「ファイル/ディレクトリ」にソースが存在するローカル絶対パス、「サーバー上の絶対パス」にマウントしたソースが存在するdocker上の絶対パス。
+![phpstormXdebug](https://user-images.githubusercontent.com/102776020/227116628-2812309c-d378-4afb-94f0-9b68b010e07e.png)
